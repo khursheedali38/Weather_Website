@@ -68,6 +68,30 @@ global $optimizer;?>
 						}
 						echo "</table>";
                                            ?>
+					     <?php
+                                            if(isset($_POST['submit'])) /* i.e. the PHP code is executed only when someone presses Submit button in the below given HTML Form */
+                                            {
+                                            $var = $_POST['any_name'];   // Here $var is the input taken from user.
+                                                $weather = $wpdb->get_results("SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = '$var' ;" ) ;
+                                                echo "<table>"; 
+                                                foreach($weather as $w){
+							echo "<tr>";
+							echo "<td>".date('Y-m-d h:i:s',$w->time)."</td>";
+							echo "<td>".$w->City_name."</td>";
+							echo "<td>".$w->temp."</td>";
+							echo "<td>".$w->conditions."</td>";
+							echo "<td>".'<img src="data:image/png;base64,' . base64_encode( $w->pic ) . '" />'."</td>";
+							echo "</tr>";
+                                                }
+                                                echo "</table>";
+
+                                            }
+                                            ?>
+ 				            //Taking user input via forms
+                                            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                                            <input type="text" name="any_name">
+                                            <input type="submit" name="submit">
+                                            </form>
                                     </div>
                                         <div style="clear:both"></div>
                                     <div class="thn_post_wrap wp_link_pages">
