@@ -42,6 +42,32 @@ global $optimizer;?>
                                 <!--THE CONTENT START-->
                                     <div class="thn_post_wrap">
                                         <?php the_content(); ?>
+                                        <?php
+                                           global $wpdb ;
+												$weather = $wpdb->get_results("SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = 'Mangalore'
+													UNION
+													SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = 'Mysore'
+													UNION
+													SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = 'Mumbai'
+													UNION
+													SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = 'Hyderabad'
+													UNION
+													SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = 'Jammu'
+													UNION
+													SELECT * FROM `TABLE 18`, `city_india`,`weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions` AND `city_india`.`City_name` = 'Ahmadabad';" );
+												echo "<table>";
+												foreach($weather as $w){
+												echo "<tr>";
+                                                echo "<td>".date('Y-m-d h:i:s',$w->time)."</td>";
+												echo "<td>".$w->City_name."</td>";
+												echo "<td>".$w->temp."</td>";
+
+												echo "<td>".$w->conditions."</td>";
+												echo "<td>".'<img src="data:image/png;base64,' . base64_encode( $w->pic ) . '" />'."</td>";
+												echo "</tr>";
+												}
+												echo "</table>";
+                                           ?>
                                     </div>
                                         <div style="clear:both"></div>
                                     <div class="thn_post_wrap wp_link_pages">
