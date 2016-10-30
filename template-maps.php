@@ -1,15 +1,3 @@
-<?php
-/**
- * Template Name: Google Maps API
- *
- * This template is used to demonstrate how to use Google Maps
- * in conjunction with a WordPress theme.
- *
- * @package Optimizer
- * 
- * @since Optimizer 1.0
- */
-?>
 
 <?php get_header(); ?>
 <!DOCTYPE html >
@@ -40,7 +28,7 @@
       var infoWindow = new google.maps.InfoWindow;
 
       // Change this depending on the name of your PHP file
-      downloadUrl("phpsqlajax_genxml.php", function(data) {
+      downloadUrl("phpsqlajax_genxml1.php", function(data) {
         var xml = data.responseXML;
         var markers = xml.documentElement.getElementsByTagName("marker");
         for (var i = 0; i < markers.length; i++) {
