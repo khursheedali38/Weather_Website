@@ -1,6 +1,6 @@
 <?php
-require("phpsqlajax_dbinfo.php");
-
+//require("phpsqlajax_dbinfo.php");
+require_once('../../../wp-config.php');
 function parseToXML($htmlStr)
 {
 $xmlStr=str_replace('<','&lt;',$htmlStr);
@@ -12,7 +12,7 @@ return $xmlStr;
 }
 
 // Opens a connection to a MySQL server
-$connection=mysql_connect ('localhost', $username, $password);
+/*$connection=mysql_connect ('localhost', $username, $password);
 if (!$connection) {
   die('Not connected : ' . mysql_error());
 }
@@ -22,13 +22,14 @@ $db_selected = mysql_select_db($database, $connection);
 if (!$db_selected) {
   die ('Can\'t use db : ' . mysql_error());
 }
-
+*/
 // Select all the rows in the markers table
-$query = "SELECT * FROM markers WHERE 1";
-$result = mysql_query($query);
-if (!$result) {
+global $wpdb ;
+$query = $wpdb->get_results("SELECT * FROM markers WHERE 1;") ;
+/*$result = mysql_query($query);
+  if (!$result) {
   die('Invalid query: ' . mysql_error());
-}
+}*/
 
 header("Content-type: text/xml");
 
@@ -36,14 +37,15 @@ header("Content-type: text/xml");
 echo '<markers>';
 
 // Iterate through the rows, printing XML nodes for each
-while ($row = @mysql_fetch_assoc($result)){
+foreach ($query as $q) 
+  {
   // ADD TO XML DOCUMENT NODE
   echo '<marker ';
-  echo 'name="' . parseToXML($row['name']) . '" ';
-  echo 'address="' . parseToXML($row['address']) . '" ';
-  echo 'lat="' . $row['lat'] . '" ';
-  echo 'lng="' . $row['lng'] . '" ';
-  echo 'type="' . $row['type'] . '" ';
+  echo 'name="' . parseToXML($q->name) . '" ';
+  echo 'address="' . parseToXML($q->address) . '" ';
+  echo 'lat="' . $q->lat . '" ';
+  echo 'lng="' . $q->lng . '" ';
+  echo 'type="' . $q->type . '" ';
   echo '/>';
 }
 
