@@ -1,12 +1,26 @@
+<?php
+/**
+ * Template Name: Google Maps API
+ *
+ * This template is used to demonstrate how to use Google Maps
+ * in conjunction with a WordPress theme.
+ *
+ * @package Optimizer
+ * 
+ * @since Optimizer 1.0
+ */
+?>
 
 <?php get_header(); ?>
+
 <!DOCTYPE html >
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>PHP/MySQL & Google Maps Example</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8YtC3hhJkvzhNHl7ichNCiU9FM31KR4M"
             type="text/javascript"></script>
+    
     <script type="text/javascript">
     //<![CDATA[
 
@@ -27,8 +41,10 @@
       });
       var infoWindow = new google.maps.InfoWindow;
 
+      //jQuery.get("http://localhost/website/wordpress/wp-content/themes/optimizer/phpsqlajax_genxml2.php");
+
       // Change this depending on the name of your PHP file
-      downloadUrl("phpsqlajax_genxml1.php", function(data) {
+      downloadUrl("http://localhost/website/wordpress/wp-content/themes/optimizer/phpsqlajax_genxml1.php", function(data) {
         var xml = data.responseXML;
         var markers = xml.documentElement.getElementsByTagName("marker");
         for (var i = 0; i < markers.length; i++) {
@@ -64,6 +80,7 @@
 
       request.onreadystatechange = function() {
         if (request.readyState == 4) {
+        	console.log(request.readyState) ;
           request.onreadystatechange = doNothing;
           callback(request, request.status);
         }
@@ -86,6 +103,7 @@
   </body>
 
 </html>
+
 
 
 <?php get_footer(); ?>

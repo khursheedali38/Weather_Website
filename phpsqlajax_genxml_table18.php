@@ -13,14 +13,15 @@ return $xmlStr;
 require_once('../../../wp-config.php');
 // Select all the rows in the markers table
  global $wpdb ;
- $query = $wpdb->get_results("SELECT * FROM `markers` ;") ;
+ $query = $wpdb->get_results("SELECT * FROM `TABLE 18`, `city_india`, `weather_pics` WHERE `TABLE 18`.`city_id` = `city_india`.`City_id` AND `weather_pics`.`pic_name` = `TABLE 18`.`conditions`;") ;
  /*echo "<table>";             
   foreach($query as $q){
   echo "<tr>";
   //echo "<td>".date('Y-m-d h:i:s',$w->time)."</td>"; to convert unix epoch time to ist
-  echo "<td>".$q->name."</td>";
-  echo "<td>".$q->address."</td>";
-  echo "<td>".$q->type."</td>";
+  echo "<td>".$q->City_name."</td>";
+  echo "<td>".$q->temp."</td>";
+  echo "<td>".'<img src="data:image/png;base64,' . base64_encode( $q->pic ) . '" />'."</td>";
+  //echo "<td>".$q->type."</td>";
   echo "</tr>";
   }
   echo "</table>";*/
@@ -35,11 +36,14 @@ foreach ($query as $q)
   {
   // ADD TO XML DOCUMENT NODE
   echo '<marker ';
-  echo 'name="' . parseToXML($q->name) . '" ';
-  echo 'address="' . parseToXML($q->address) . '" ';
-  echo 'lat="' . $q->lat . '" ';
-  echo 'lng="' . $q->lng . '" ';
-  echo 'type="' . $q->type . '" ';
+  echo 'name="' . parseToXML($q->City_name) . '" ';
+  echo 'description="' . parseToXML($q->description_weather) . '" ';
+  echo 'lat="' . $q->lattitude . '" ';
+  echo 'lng="' . $q->longitude . '" ';
+  //echo 'type="' . $q->type . '" ';
+  echo 'temp="'. $q->temp . '" ';
+  echo 'pic="' . base64_encode( $q->pic )  . '" ';
+  //echo 'pic="' . '<img src="data:image/png;base64,' . base64_encode( $q->pic ) . '" />' . '" ';
   echo '/>';
 }
 
